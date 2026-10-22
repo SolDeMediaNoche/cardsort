@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una sorpresa para ti 💌</title>
+<style>
+:root{--pink:#ff5f9e;--cream:#fff7ed;--purple:#6d28d9;--ink:#28152f}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif}
+body{color:var(--cream);background:radial-gradient(circle at 15% 15%,#5d267d 0,transparent 30%),radial-gradient(circle at 85% 80%,#a12d66 0,transparent 30%),linear-gradient(135deg,#140d2b,#27113c 55%,#451542);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.25;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:37px 37px}
+.center{min-height:100vh;display:grid;place-items:center;padding:24px;position:relative}
+.card{width:min(720px,100%);text-align:center;position:relative;z-index:1}
+.eyebrow{letter-spacing:.22em;text-transform:uppercase;color:#ffb8d3;font-size:.75rem;font-weight:800}
+h1{font-size:clamp(2.3rem,7vw,4.8rem);line-height:.98;margin:16px 0;background:linear-gradient(90deg,#fff3c4,#ff9dc9,#d8c1ff);color:transparent;background-clip:text;text-shadow:0 10px 50px #ff5f9e22}
+.lead{font-size:1.08rem;color:#f5dff4;max-width:520px;margin:0 auto 28px;line-height:1.7}
+.envelope-wrap{width:250px;height:180px;margin:30px auto 28px;position:relative;perspective:800px;filter:drop-shadow(0 22px 35px #0006)}
+.envelope{position:absolute;inset:20px 0 0;background:#ff83b5;border-radius:9px;overflow:hidden}
+.envelope:before{content:"";position:absolute;inset:0;background:linear-gradient(145deg,#ffb1cf,#ff5f9e);clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%)}
+.flap{position:absolute;top:20px;left:0;width:100%;height:115px;background:#ffd0df;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .7s ease;z-index:3}
+.seal{position:absolute;z-index:4;top:77px;left:calc(50% - 23px);width:46px;height:46px;border-radius:50%;background:#b91c5c;display:grid;place-items:center;font-size:23px;box-shadow:0 4px 12px #8c174c66;transition:opacity .25s}
+.envelope.open .flap{transform:rotateX(180deg)}
+.envelope.open .seal{opacity:0}
+.letter-peek{position:absolute;z-index:2;left:18px;right:18px;top:2px;height:130px;border-radius:6px;background:#fff9f0;color:#8b2e60;display:grid;place-items:center;font-size:30px;transition:transform .7s}
+.envelope.open .letter-peek{transform:translateY(-58px)}
+button{border:0;border-radius:999px;padding:15px 25px;font-weight:900;font-size:1rem;cursor:pointer;color:#32123b;background:linear-gradient(90deg,#ffe7a8,#ff9cc8);box-shadow:0 8px 25px #ff6eae35;transition:transform .2s,filter .2s}
+button:hover{transform:translateY(-3px) scale(1.02);filter:brightness(1.06)}
+button:focus-visible{outline:3px solid white;outline-offset:4px}
+.hint{font-size:.85rem;color:#d6b7dc;margin-top:15px}
+.hidden{display:none!important}
+#countdown{font-size:clamp(1.3rem,4vw,2.3rem);font-weight:900;color:#ffe7a8;margin:22px 0}
+#countdown .number{display:inline-grid;place-items:center;width:68px;height:68px;border:2px solid #ff8fbd;border-radius:50%;margin-left:8px;box-shadow:0 0 30px #ff5f9e44}
+#jumpscare{position:fixed;inset:0;z-index:20;background:#050505;display:grid;place-items:center;overflow:hidden}
+#jumpscare .warning{position:absolute;top:18px;left:0;right:0;text-align:center;color:#ff2222;font-size:clamp(1rem,4vw,2rem);font-weight:1000;letter-spacing:.2em;z-index:2;text-shadow:0 0 20px red}
+.scare-art{width:min(100vw,780px);height:min(88vh,780px);animation:slam .32s ease-out both,shake .08s infinite .32s;filter:drop-shadow(0 0 35px #f00)}
+@keyframes slam{from{transform:scale(.05) rotate(-12deg);opacity:.1}to{transform:scale(1.08);opacity:1}}
+@keyframes shake{0%{translate:-4px 2px}50%{translate:5px -3px}100%{translate:-2px -1px}}
+.flash{position:absolute;inset:0;background:#fff;animation:flash .25s steps(2,end) 3;pointer-events:none}
+@keyframes flash{50%{opacity:0}}
+#apology{background:radial-gradient(circle,#48132c,#09050f 70%);z-index:30}
+#apology h2{font-size:clamp(2.3rem,7vw,5rem);color:#ffb5d0;margin:12px 0}
+#apology p{font-size:1.2rem;line-height:1.8;color:#f5e4f4;max-width:580px;margin:0 auto 28px}
+#birthday{background:radial-gradient(circle at 50% 0,#6e287f,#24103d 55%,#11091f);z-index:10;overflow:auto}
+.letter-card{width:min(760px,100%);padding:clamp(24px,5vw,48px);border:1px solid #ffd7e588;border-radius:28px;background:linear-gradient(145deg,#fff9f0f5,#ffe8f1f2);color:var(--ink);box-shadow:0 30px 100px #0007;position:relative}
+.letter-card:before{content:"✦  ✧  ✦";display:block;color:#cf4f8b;letter-spacing:1em;font-size:1rem}
+.letter-card h2{font-size:clamp(2.3rem,7vw,4.8rem);line-height:1;margin:22px 0 16px;color:#b42d70}
+.letter-card p{font-size:clamp(1rem,2.3vw,1.15rem);line-height:1.9;text-align:left;color:#56334f}
+.signature{font-family:"Brush Script MT","Segoe Script",cursive;font-size:2rem;color:#b42d70;text-align:right;margin-top:18px}
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:11}
+.confetti span{position:absolute;top:-10vh;font-size:22px;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(120vh) rotate(720deg)}}
+.small{font-size:.8rem;color:#d5b5dc;margin-top:20px}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="center" id="intro">
+  <section class="card">
+    <div class="eyebrow">✦ una sorpresa especial ✦</div>
+    <h1>Hay algo<br>para ti…</h1>
+    <p class="lead">Preparé una cartita con mucho cariño. Solo tienes que abrirla… aunque quizá deberías prepararte para lo inesperado. 💌</p>
+    <div class="envelope-wrap" aria-label="Sobre rosa cerrado">
+      <div class="envelope" id="envelope"><div class="letter-peek">💌</div></div>
+      <div class="flap" id="flap"></div><div class="seal" id="seal">♥</div>
+    </div>
+    <button id="openBtn">Abrir mi sorpresa ✨</button>
+    <div class="hint">Con cariño, para alguien que merece algo bonito.</div>
+    <div id="countdown" class="hidden">La sorpresa llega en <span class="number" id="seconds">5</span></div>
+  </section>
+</main>
+
+<section id="jumpscare" class="hidden" aria-label="Susto sorpresa">
+  <div class="warning">¡HOLA, ESTOY AQUÍ! 👁</div>
+  <div class="flash"></div>
+  <!-- Animatrónico original estilo survival horror, dibujado en SVG para que la página funcione sin descargar imágenes. -->
+  <svg class="scare-art" viewBox="0 0 600 650" role="img" aria-label="Un oso animatrónico aterrador aparece de golpe">
+    <defs>
+      <radialGradient id="fur"><stop stop-color="#9b7853"/><stop offset=".6" stop-color="#49372e"/><stop offset="1" stop-color="#171317"/></radialGradient>
+      <linearGradient id="metal"><stop stop-color="#17151a"/><stop offset=".45" stop-color="#aaa09a"/><stop offset=".6" stop-color="#28232b"/><stop offset="1" stop-color="#050507"/></linearGradient>
+      <radialGradient id="eye"><stop stop-color="#fff"/><stop offset=".15" stop-color="#ffedb5"/><stop offset=".4" stop-color="#ff1717"/><stop offset="1" stop-color="#400000"/></radialGradient>
+      <filter id="rough"><feTurbulence baseFrequency=".8" numOctaves="2" seed="8" type="fractalNoise" result="noise"/><feComposite in="noise" in2="SourceGraphic" operator="in" result="texture"/><feBlend in="SourceGraphic" in2="texture" mode="multiply"/></filter>
+    </defs>
+    <rect width="600" height="650" fill="#030204"/>
+    <ellipse cx="300" cy="590" rx="240" ry="55" fill="#b00016" opacity=".22"/>
+    <g filter="url(#rough)" stroke="#0b080b" stroke-width="12" stroke-linejoin="round">
+      <path fill="url(#fur)" d="M118 250 Q70 155 122 90 Q165 42 213 104 Q300 58 388 104 Q440 40 486 91 Q535 155 482 250 L510 465 Q480 570 300 585 Q120 570 90 465Z"/>
+      <path fill="url(#fur)" d="M132 125 Q92 40 157 42 Q210 45 210 132Z"/>
+      <path fill="url(#fur)" d="M390 132 Q390 45 443 42 Q508 40 468 125Z"/>
+      <path fill="#18151a" d="M160 210 Q208 170 254 215 L244 294 Q200 315 160 270Z"/>
+      <path fill="#18151a" d="M346 215 Q393 170 440 210 L440 270 Q398 315 356 294Z"/>
+      <ellipse cx="207" cy="250" rx="30" ry="39" fill="url(#eye)" stroke="#d9d1c9" stroke-width="5"/>
+      <ellipse cx="394" cy="250" rx="30" ry="39" fill="url(#eye)" stroke="#d9d1c9" stroke-width="5"/>
+      <circle cx="207" cy="252" r="9" fill="#fff"/>
+      <circle cx="394" cy="252" r="9" fill="#fff"/>
+      <path fill="#09080b" d="M147 198 L260 217 L251 187 L160 170Z"/>
+      <path fill="#09080b" d="M340 217 L453 198 L440 170 L349 187Z"/>
+      <path fill="#876b56" d="M177 323 Q190 277 250 295 L300 330 L350 295 Q410 277 423 323 L400 392 Q355 425 300 419 Q245 425 200 392Z"/>
+      <path fill="#151116" d="M220 334 Q300 301 380 334 L363 400 Q300 435 237 400Z"/>
+      <path fill="url(#metal)" d="M223 355 L252 359 L252 410 L223 405Z M270 355 L297 359 L297 416 L270 414Z M306 359 L333 355 L333 414 L306 416Z M348 359 L377 355 L377 405 L348 410Z" stroke-width="5"/>
+      <path fill="#bdb1a6" d="M270 312 Q300 291 330 312 Q323 337 300 338 Q277 337 270 312Z"/>
+      <path fill="#060508" d="M274 313 Q300 301 326 313 L317 328 L283 328Z"/>
+      <path fill="url(#metal)" d="M92 390 Q45 400 63 460 L112 500 L153 465 L142 411Z M458 411 L447 465 L488 500 L537 460 Q555 400 508 390Z"/>
+      <path fill="#30272a" d="M113 462 L164 478 L148 545 L103 531Z M436 478 L487 462 L497 531 L452 545Z"/>
+      <path fill="#6e5140" d="M200 448 Q300 476 400 448 L433 570 Q300 620 167 570Z"/>
+      <path fill="#111015" d="M248 476 L282 484 L278 530 L242 523Z M318 484 L352 476 L358 523 L322 530Z"/>
+    </g>
+    <g fill="#ff182b" opacity=".8"><path d="M80 170 l-28 34 25 3 -20 28 44 -39 -23 -3z"/><path d="M510 165 l25 35 -23 2 17 28 -42 -38 22 -4z"/></g>
+    <text x="300" y="635" text-anchor="middle" font-size="20" font-weight="900" fill="#ff2b3c" letter-spacing="7">NIGHT SHIFT</text>
+  </svg>
+</section>
+
+<section id="apology" class="center hidden">
+  <div class="card">
+    <div style="font-size:4rem">🥹💗</div>
+    <h2>¡PERDÓOOON!</h2>
+    <p>JAJAJA, espero que no hayas aventado el celular o la compu 😭. El susto ya pasó, lo prometo. Ahora sí… viene lo bonito de verdad.</p>
+    <button id="continueBtn">Ver mi carta de cumpleaños 💖</button>
+  </div>
+</section>
+
+<section id="birthday" class="center hidden">
+  <div class="confetti" id="confetti"></div>
+  <article class="letter-card">
+    <div style="font-size:3.2rem;margin-top:12px">🎂🎉💐</div>
+    <h2>¡Feliz cumpleaños Vale!</h2>
+    <p>Hoy es un día especial porque el mundo celebra que existes tú. ✨ Ojalá la vida te regale razones infinitas para sonreír, personas que te abracen bonito, sueños que se cumplan y momentos que quieras guardar para siempre.</p>
+    <p>Deseo que este nuevo año de tu vida venga lleno de aventuras, tranquilidad, amor del bueno y oportunidades para descubrir lo increíble que eres. Que nunca te falten las ganas de intentar algo nuevo, la fuerza para superar los días difíciles ni alguien que te recuerde lo mucho que vales.</p>
+    <p>Y aunque te haya recibido con un susto digno de una noche en Freddy Fazbear’s… 😭🐻, esta carta sí va en serio: <strong>mereces cosas preciosas, hoy y todos los días.</strong> Que cada vela que soples sea un deseo acercándose a hacerse realidad.</p>
+    <p>Disfruta muchísimo tu día, come pastel sin culpa, ríete hasta que te duela la panza y toma muchas fotos para recordar lo bonito de hoy. ¡Que este sea uno de tus mejores capítulos! 💗</p>
+    <p style="text-align:center;font-size:1.15rem;color:#a52a68"><strong>¡Que todos tus deseos encuentren el camino hacia ti! 🌟</strong></p>
+    <div class="signature">Con mucho cariño, para ti ♡</div>
+  </article>
+</section>
+<script>
+const openBtn=document.getElementById('openBtn'), envelope=document.getElementById('envelope');
+const countdown=document.getElementById('countdown'), secondsEl=document.getElementById('seconds');
+const scare=document.getElementById('jumpscare'), intro=document.getElementById('intro');
+const apology=document.getElementById('apology'), birthday=document.getElementById('birthday');
+let audioCtx;
+function playScareSound(){
+  try{
+    audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    const now=audioCtx.currentTime;
+    const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+    osc.type='sawtooth'; osc.frequency.setValueAtTime(130,now);
+    osc.frequency.exponentialRampToValueAtTime(880,now+.13);
+    osc.frequency.exponentialRampToValueAtTime(95,now+.75);
+    gain.gain.setValueAtTime(.001,now); gain.gain.exponentialRampToValueAtTime(.48,now+.035);
+    gain.gain.exponentialRampToValueAtTime(.001,now+1.15);
+    osc.connect(gain); gain.connect(audioCtx.destination); osc.start(now); osc.stop(now+1.2);
+    const osc2=audioCtx.createOscillator(), g2=audioCtx.createGain();
+    osc2.type='square'; osc2.frequency.setValueAtTime(1800,now+.02); osc2.frequency.exponentialRampToValueAtTime(140,now+.4);
+    g2.gain.setValueAtTime(.001,now); g2.gain.exponentialRampToValueAtTime(.18,now+.025); g2.gain.exponentialRampToValueAtTime(.001,now+.55);
+    osc2.connect(g2); g2.connect(audioCtx.destination); osc2.start(now); osc2.stop(now+.6);
+  }catch(e){}
+}
+openBtn.addEventListener('click',async()=>{
+  openBtn.disabled=true;
+  envelope.classList.add('open');
+  document.querySelector('.flap').style.transform='rotateX(180deg)';
+  countdown.classList.remove('hidden');
+  try{audioCtx=new (window.AudioContext||window.webkitAudioContext)(); await audioCtx.resume();}catch(e){}
+  let n=5; secondsEl.textContent=n;
+  const timer=setInterval(()=>{
+    n--; secondsEl.textContent=n;
+    if(n<=0){
+      clearInterval(timer); intro.classList.add('hidden'); scare.classList.remove('hidden');
+      playScareSound();
+      setTimeout(()=>{scare.classList.add('hidden');apology.classList.remove('hidden')},1900);
+    }
+  },1000);
+});
+document.getElementById('continueBtn').addEventListener('click',()=>{
+  apology.classList.add('hidden'); birthday.classList.remove('hidden'); makeConfetti();
+});
+function makeConfetti(){
+  const box=document.getElementById('confetti');
+  const bits=['💖','✨','🎉','🌸','⭐','💗','🎊'];
+  for(let i=0;i<42;i++){
+    const s=document.createElement('span'); s.textContent=bits[Math.floor(Math.random()*bits.length)];
+    s.style.left=Math.random()*100+'%'; s.style.animationDuration=(4+Math.random()*6)+'s';
+    s.style.animationDelay=(-Math.random()*8)+'s'; s.style.fontSize=(14+Math.random()*20)+'px'; box.appendChild(s);
+  }
+}
+</script>
+</body>
+</html>

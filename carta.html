@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Una Sorpresa Especial de Cumpleaños 🎉</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Fonts & Base Animations */
+        body {
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            background: #0f0c20;
+            color: #ffffff;
+            touch-action: manipulation;
+        }
+
+        .font-cursive {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .font-elegant {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .font-pixel {
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Envelope Styles & Opening Animation */
+        .envelope-wrapper {
+            perspective: 1000px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(255, 117, 140, 0.4);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        @media (min-width: 640px) {
+            .envelope {
+                width: 420px;
+                height: 280px;
+            }
+        }
+
+        .envelope:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 22px 45px rgba(255, 117, 140, 0.6);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 120px solid #f65873;
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3;
+        }
+
+        @media (min-width: 640px) {
+            .envelope-flap {
+                border-left-width: 210px;
+                border-right-width: 210px;
+                border-top-width: 160px;
+            }
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #e63946 0%, #900c3f 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+            z-index: 4;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        @media (min-width: 640px) {
+            .wax-seal {
+                top: 135px;
+                width: 65px;
+                height: 65px;
+            }
+        }
+
+        .envelope.open .wax-seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        /* Screen Shake Animation for Jumpscare */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-3px, -2px) rotate(-2deg); }
+            20% { transform: translate(-4px, 0px) rotate(3deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(2deg); }
+            50% { transform: translate(-2px, 3px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-2deg); }
+            80% { transform: translate(-1px, -1px) rotate(3deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .jumpscare-active {
+            animation: shake 0.08s infinite;
+        }
+
+        /* Static / Glitch effect overlay */
+        .glitch-overlay {
+            background: radial-gradient(circle, rgba(255,0,0,0.3) 0%, rgba(0,0,0,0.95) 80%);
+            mix-blend-mode: hard-light;
+        }
+
+        /* Floating Candles Glow */
+        .candle-flame {
+            animation: flicker 1.2s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { transform: scale(1) rotate(-2deg); opacity: 0.9; }
+            50% { transform: scale(1.15) rotate(2deg); opacity: 1; filter: drop-shadow(0 0 12px #ff9900); }
+        }
+
+        /* Pulse glowing text */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255,215,0,0.6), 0 0 20px rgba(255,105,180,0.5);
+        }
+
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 12, 32, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 117, 140, 0.5);
+            border-radius: 4px;
+        }
+
+        /* Heart pop animation for instagram double click */
+        @keyframes heartPop {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.9; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+        .heart-pop-anim {
+            animation: heartPop 0.8s ease-out forwards;
+        }
+
+        /* Carousel Scroll Snap */
+        .carousel-container {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .carousel-slide {
+            scroll-snap-align: start;
+            flex-shrink: 0;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center relative select-none p-3 sm:p-6 bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900">
+
+    <!-- Canvas for Floating Particle Stars & Confetti -->
+    <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+    <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <!-- Main Container -->
+    <main class="relative z-10 w-full max-w-4xl flex flex-col items-center justify-center my-auto">
+
+        <!-- STEP 1: INITIAL ENVELOPE SCREEN -->
+        <div id="stepEnvelope" class="flex flex-col items-center justify-center transition-all duration-700 w-full">
+            <div class="text-center mb-6 sm:mb-8 animate-bounce">
+                <span class="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-pink-500/20 border border-pink-500/30 text-pink-300 text-xs sm:text-sm font-semibold mb-2 sm:mb-3 tracking-widest uppercase">
+                    ✨ Tienes un mensaje especial ✨
+                </span>
+                <h1 class="text-2xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-purple-200 to-indigo-300 glow-text">
+                    ¡Una Sorpresa Te Espera!
+                </h1>
+                <p class="text-slate-400 mt-2 text-xs sm:text-base">Haz clic en el sobre para abrir tu carta</p>
+            </div>
+
+            <!-- Interactive Envelope -->
+            <div class="envelope-wrapper my-4">
+                <div id="envelope" class="envelope flex items-center justify-center" onclick="openEnvelope()">
+                    <div class="envelope-flap"></div>
+                    <div class="wax-seal">
+                        <i class="fa-solid font-bold text-yellow-300 text-xl sm:text-2xl">🎁</i>
+                    </div>
+                    <!-- Letter peaking inside -->
+                    <div id="letterPreview" class="absolute bottom-3 sm:bottom-4 left-4 sm:left-6 right-4 sm:right-6 h-28 sm:h-36 bg-amber-50 rounded-t-lg p-3 sm:p-4 shadow-inner text-slate-800 text-[10px] sm:text-xs font-serif overflow-hidden transition-all duration-500 transform translate-y-2 opacity-90">
+                        <div class="w-full border-b border-amber-200 pb-1 mb-1.5 flex justify-between items-center">
+                            <span class="font-bold text-pink-600">Para una persona muy especial...</span>
+                            <span class="text-slate-400">♥</span>
+                        </div>
+                        <p class="italic text-slate-600">
+                            "En este día tan importante, quería decirte que eres alguien sumamente valioso en mi vida y..."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-500 mt-6 flex items-center gap-2">
+                <i class="fa-solid fa-volume-high"></i> Sube el volumen de tu dispositivo para una mejor experiencia
+            </p>
+        </div>
+
+
+        <!-- STEP 2: TEASER READING SCREEN (Starts 10s Timer) -->
+        <div id="stepReading" class="hidden w-full max-w-lg transition-all duration-500 transform scale-95 opacity-0">
+            <div class="glass-card rounded-2xl p-5 sm:p-8 text-center relative border border-pink-500/30 shadow-2xl">
+                <!-- Countdown Visualizer Bar (10 Seconds) -->
+                <div class="absolute top-0 left-0 right-0 h-1.5 bg-slate-800 rounded-t-2xl overflow-hidden">
+                    <div id="timerBar" class="h-full bg-gradient-to-r from-pink-500 to-purple-500 w-full transition-all linear" style="transition-duration: 10000ms;"></div>
+                </div>
+
+                <div class="text-pink-400 text-3xl sm:text-4xl mb-3">💌</div>
+                <h2 class="text-xl sm:text-3xl font-bold text-pink-200 font-cursive mb-4">Un pequeño pensamiento...</h2>
+                
+                <div class="bg-slate-900/60 rounded-xl p-4 sm:p-5 border border-white/10 text-left text-slate-200 text-xs sm:text-base leading-relaxed space-y-3">
+                    <p id="typingText" class="font-serif italic text-amber-100/90">
+                        "Estuve pensando durante días en la manera perfecta de expresar lo mucho que significas para mí. No siempre es fácil encontrar las palabras adecuadas, pero quería asegurarme de darte una sorpresa que NUNCA olvides..."
+                    </p>
+                </div>
+
+                <div class="mt-6 flex justify-center items-center gap-2 text-xs text-pink-300/80 animate-pulse">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    <span>Cargando el resto del mensaje...</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- STEP 3: FNAF JUMPSCARE OVERLAY -->
+        <div id="jumpscareOverlay" class="fixed inset-0 z-50 bg-black hidden flex-col items-center justify-center overflow-hidden">
+            <!-- Red Ambient Glow / Glitch Background -->
+            <div class="absolute inset-0 glitch-overlay pointer-events-none"></div>
+
+            <!-- Flash effect overlay -->
+            <div id="flashBg" class="absolute inset-0 bg-red-600/30 opacity-0 pointer-events-none"></div>
+
+            <!-- Animatronic SVG Monster Face (FNAF Style) -->
+            <div id="fnafFace" class="relative z-10 w-full max-w-lg px-4 flex flex-col items-center transform scale-125 sm:scale-150 transition-transform">
+                <svg viewBox="0 0 500 500" class="w-full h-auto drop-shadow-[0_0_35px_rgba(255,0,0,0.9)]">
+                    <!-- Head Outer Shape (Bear/Animatronic) -->
+                    <path d="M 100 220 Q 80 120 250 100 Q 420 120 400 220 Q 420 380 250 420 Q 80 380 100 220 Z" fill="#2b1a0e" stroke="#110a05" stroke-width="8"/>
+                    <!-- Ears -->
+                    <circle cx="100" cy="110" r="45" fill="#2b1a0e" stroke="#000" stroke-width="6"/>
+                    <circle cx="100" cy="110" r="25" fill="#541313"/>
+                    <circle cx="400" cy="110" r="45" fill="#2b1a0e" stroke="#000" stroke-width="6"/>
+                    <circle cx="400" cy="110" r="25" fill="#541313"/>
+                    
+                    <!-- Eye Sockets (Creepy Deep Black) -->
+                    <ellipse cx="170" cy="200" rx="45" ry="40" fill="#000" stroke="#ff0000" stroke-width="2"/>
+                    <ellipse cx="330" cy="200" rx="45" ry="40" fill="#000" stroke="#ff0000" stroke-width="2"/>
+                    
+                    <!-- Glowing Evil Endoskeleton Pupils -->
+                    <circle cx="170" cy="200" r="10" fill="#ffffff" class="animate-ping"/>
+                    <circle cx="170" cy="200" r="6" fill="#ff0000"/>
+                    <circle cx="330" cy="200" r="10" fill="#ffffff" class="animate-ping"/>
+                    <circle cx="330" cy="200" r="6" fill="#ff0000"/>
+
+                    <!-- Muzzle -->
+                    <ellipse cx="250" cy="280" rx="75" ry="50" fill="#4a3321" stroke="#110a05" stroke-width="5"/>
+                    <ellipse cx="250" cy="250" rx="20" ry="12" fill="#050505"/> <!-- Nose -->
+
+                    <!-- Massive Sharp Animatronic Jaw Open -->
+                    <path d="M 140 310 Q 250 330 360 310 Q 380 440 250 450 Q 120 440 140 310 Z" fill="#150803" stroke="#000" stroke-width="6"/>
+                    
+                    <!-- Sharp Endoskeleton Teeth Rows -->
+                    <!-- Upper Teeth -->
+                    <polygon points="160,310 170,335 180,310" fill="#fff"/>
+                    <polygon points="190,312 200,340 210,312" fill="#fff"/>
+                    <polygon points="220,315 230,342 240,315" fill="#fff"/>
+                    <polygon points="250,315 260,342 270,315" fill="#fff"/>
+                    <polygon points="280,312 290,340 300,312" fill="#fff"/>
+                    <polygon points="310,310 320,335 330,310" fill="#fff"/>
+                    
+                    <!-- Lower Teeth -->
+                    <polygon points="170,410 180,380 190,410" fill="#eee"/>
+                    <polygon points="200,420 210,385 220,420" fill="#eee"/>
+                    <polygon points="230,425 240,388 250,425" fill="#eee"/>
+                    <polygon points="260,425 270,388 280,425" fill="#eee"/>
+                    <polygon points="290,420 300,385 310,420" fill="#eee"/>
+                    <polygon points="320,410 330,380 340,410" fill="#eee"/>
+
+                    <!-- Wires / Creepy Details -->
+                    <path d="M 90 200 Q 60 220 50 260" stroke="#ff0000" stroke-width="4" fill="none"/>
+                    <path d="M 410 200 Q 440 220 450 260" stroke="#00ff00" stroke-width="4" fill="none"/>
+                    <path d="M 230 100 Q 250 60 240 40" stroke="#ffff00" stroke-width="3" fill="none"/>
+                </svg>
+                <p class="font-pixel text-red-600 text-lg sm:text-3xl mt-2 tracking-widest uppercase text-center animate-pulse">
+                    ¡¡ GET READY !!
+                </p>
+            </div>
+        </div>
+
+
+        <!-- STEP 4: APOLOGY & GRAND BIRTHDAY CARD -->
+        <div id="stepApologyAndCard" class="hidden w-full flex flex-col items-center transition-all duration-1000 transform translate-y-10 opacity-0">
+            
+            <!-- Funny Apology Banner -->
+            <div id="apologyBanner" class="w-full max-w-xl bg-amber-500/20 border-2 border-amber-400/50 backdrop-blur-md rounded-2xl p-4 sm:p-5 mb-6 sm:mb-8 text-center shadow-lg relative overflow-hidden">
+                <div class="absolute -right-4 -bottom-4 text-5xl sm:text-6xl opacity-20">🙈</div>
+                <h3 class="text-lg sm:text-2xl font-bold text-amber-300 flex items-center justify-center gap-2">
+                    <span>¡JAJAJA! ¡PERDÓN POR EL SUSTO!</span> 😂🎈
+                </h3>
+                <p class="text-xs sm:text-sm text-amber-100/90 mt-1">
+                    No pude evitar la broma... ¡Pero te juro que ahora sí viene lo bueno de verdad!
+                </p>
+            </div>
+
+            <!-- Grand Birthday Main Letter Container -->
+            <div class="glass-card w-full rounded-2xl sm:rounded-3xl p-4 sm:p-10 border border-amber-300/30 shadow-[0_0_50px_rgba(236,72,153,0.25)] relative overflow-hidden">
+                
+                <!-- Background Glowing Orbs -->
+                <div class="absolute -top-20 -left-20 w-60 h-60 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Header / Cake Illustration -->
+                <div class="flex flex-col items-center text-center">
+                    
+                    <!-- Dynamic Cake with Interactive Candle -->
+                    <div class="relative my-2 cursor-pointer group" onclick="toggleCandle()" title="¡Haz clic para apagar/encender la vela!">
+                        <!-- Flame -->
+                        <div id="candleFlame" class="candle-flame absolute -top-6 left-1/2 -translate-x-1/2 w-4 h-6 bg-gradient-to-t from-red-500 via-amber-400 to-yellow-200 rounded-full blur-[1px] shadow-[0_0_15px_#f59e0b]"></div>
+                        <!-- Candle stick -->
+                        <div class="w-2.5 h-7 bg-gradient-to-r from-pink-300 to-pink-100 mx-auto rounded-t-sm"></div>
+                        <!-- Cake Base SVG -->
+                        <svg class="w-24 sm:w-36 h-auto drop-shadow-lg" viewBox="0 0 120 90">
+                            <!-- Frosting Top -->
+                            <path d="M 10 35 Q 20 25 30 35 Q 40 45 50 35 Q 60 25 70 35 Q 80 45 90 35 Q 100 25 110 35 L 110 50 Q 100 60 90 50 Q 80 40 70 50 Q 60 60 50 50 Q 40 40 30 50 Q 20 60 10 50 Z" fill="#f472b6"/>
+                            <!-- Layer 1 -->
+                            <rect x="15" y="45" width="90" height="20" rx="3" fill="#fbcfe8"/>
+                            <!-- Layer 2 Bottom -->
+                            <rect x="10" y="65" width="100" height="20" rx="4" fill="#38bdf8"/>
+                            <path d="M 10 65 Q 25 72 40 65 Q 55 72 70 65 Q 85 72 100 65 L 100 70 L 10 70 Z" fill="#7dd3fc"/>
+                            <!-- Sprinkles -->
+                            <circle cx="25" cy="52" r="2" fill="#fbbf24"/>
+                            <circle cx="45" cy="55" r="2" fill="#a855f7"/>
+                            <circle cx="75" cy="52" r="2" fill="#22c55e"/>
+                            <circle cx="95" cy="56" r="2" fill="#ef4444"/>
+                        </svg>
+                        <span class="text-[10px] text-pink-300 opacity-80 group-hover:opacity-100 block mt-1">(Toca la vela)</span>
+                    </div>
+
+                    <span class="text-amber-200 text-xs sm:text-sm font-semibold tracking-widest uppercase mt-2">✨ Un mensaje del corazón ✨</span>
+                    
+                    <h1 class="text-3xl sm:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-pink-400 to-rose-300 font-cursive my-2 sm:my-3 glow-text transform hover:scale-105 transition-transform duration-300">
+                        ¡Feliz Cumpleaños Vale! 🎉
+                    </h1>
+                </div>
+
+                <!-- Epic Birthday Letter Body Text -->
+                <div class="mt-4 sm:mt-6 space-y-3 sm:space-y-4 text-slate-100 text-xs sm:text-base leading-relaxed font-sans bg-slate-900/40 p-4 sm:p-8 rounded-2xl border border-white/10 backdrop-blur-sm">
+                    <p class="first-letter:text-3xl sm:first-letter:text-4xl first-letter:font-extrabold first-letter:text-pink-400 first-letter:mr-2 first-letter:float-left">
+                        Hoy no es un día cualquiera en el calendario. Hoy celebramos el día en que el mundo se volvió un lugar un poco más brillante, más divertido y sin duda mucho más especial porque tú llegaste a él.
+                    </p>
+                    
+                    <p>
+                        Quería aprovechar esta fecha no solo para desearte un año lleno de pastel, fiestas y regalos, sino para recordarte lo grandioso que es tenerte cerca. Tu energía, tus risas y cada uno de los momentos compartidos dejan una huella imborrable en las personas que te rodean.
+                    </p>
+
+                    <p>
+                        Que este nuevo año de vida venga cargado de <strong>sueños cumplidos, viajes inolvidables, éxitos merecidos y risas que hagan doler la panza</strong>. Deseo de todo corazón que nunca pierdas esa chispa única que te caracteriza y que la vida te devuelva multiplicado todo el cariño y la luz que siempre entregas a los demás.
+                    </p>
+
+                    <p class="pt-2 text-pink-200 font-medium italic">
+                        "Recuerda siempre: lo mejor de tu historia aún está por escribirse. ¡Sigue brillando como solo tú sabes hacerlo!"
+                    </p>
+
+                    <div class="pt-4 border-t border-white/10 flex justify-between items-center text-xs sm:text-sm text-pink-300 font-cursive text-base sm:text-xl">
+                        <span>Con muchísimo cariño y aprecio,</span>
+                        <span class="font-bold text-amber-300">¡Rodolfo! ❤️</span>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN INSTAGRAM DE RECUERDOS Y FOTOS (CARRUSEL PARA 10 FOTOS Y 2 VIDEOS) -->
+                <div class="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-pink-500/30 flex flex-col items-center w-full">
+                    <div class="w-full max-w-sm sm:max-w-md bg-slate-900/90 border border-slate-700/80 rounded-2xl overflow-hidden shadow-2xl text-left">
+                        
+                        <!-- Header Instagram -->
+                        <div class="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 border-b border-slate-800">
+                            <div class="flex items-center gap-2.5 sm:gap-3">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full p-[2px] bg-gradient-to-tr from-yellow-400 via-rose-500 to-purple-600">
+                                    <div class="w-full h-full bg-slate-900 rounded-full p-[2px] flex items-center justify-center overflow-hidden">
+                                        <span class="text-xs sm:text-sm font-bold text-pink-400">👑</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-1">
+                                        <span class="font-bold text-xs text-slate-100">vale_bday</span>
+                                        <i class="fa-solid fa-circle-check text-sky-400 text-[10px]"></i>
+                                    </div>
+                                    <span class="text-[9px] sm:text-[10px] text-slate-400">Recuerdos Inolvidables ✨</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span id="slideIndicatorText" class="text-[10px] font-bold text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded-full">1/12</span>
+                                <button onclick="document.getElementById('photoUploader').click()" class="text-slate-400 hover:text-pink-400 transition text-xs" title="Añadir/Cambiar multimedia">
+                                    <i class="fa-solid fa-plus-circle"></i>
+                                </button>
+                            </div>
+                            <input type="file" id="photoUploader" accept="image/*,video/*" multiple class="hidden" onchange="uploadCustomMedia(event)">
+                        </div>
+
+                        <!-- CARRUSEL CONTENEDOR MULTIMEDIA -->
+                        <div class="relative w-full aspect-square bg-slate-950 overflow-hidden group">
+                            
+                            <!-- Track de Diapositivas -->
+                            <div id="carouselTrack" class="carousel-container no-scrollbar flex w-full h-full overflow-x-auto" onscroll="updateCarouselIndicators()">
+                                
+                                <!-- Foto 1 -->
+                                <div class="carousel-slide w-full h-full relative" ondblclick="triggerLikeHeart()">
+                                    <img src="c.jpeg" class="w-full h-full object-cover">
+                                </div>
+                                <!-- Foto 2 -->
+                                <div class="carousel-slide w-full h-full relative" ondblclick="triggerLikeHeart()">
+                                    <img src="chef.jpeg" class="w-full h-full object-cover">
+                                </div>
+                                <!-- Video 1 -->
+                                <div class="carousel-slide w-full h-full relative bg-black flex items-center justify-center">
+                                    <video src="val.mp4" class="w-full h-full object-cover" loop muted playsinline onclick="toggleVideoPlay(this)"></video>
+                                    <div class="absolute bottom-3 right-3 bg-black/60 p-1.5 rounded-full text-white text-xs pointer-events-none">
+                                        <i class="fa-solid fa-video"></i>
+                                    </div>
+                                </div>
+                                <!-- Foto 3 -->
+                                <div class="carousel-slide w-full h-full relative" ondblclick="triggerLikeHeart()">
+                                    <img src="le.jpeg" class="w-full h-full object-cover">
+                                </div>
+                                <!-- Foto 4 -->
+                                <div class="carousel-slide w-full h-full relative" ondblclick="triggerLikeHeart()">
+                                    <img src="fe.jpeg" class="w-full h-full object-cover">
+                                </div>
+                                <!-- Video 2 -->
+                                <div class="carousel-slide w-full h-full relative bg-black flex items-center justify-center">
+                                    <video src="va.mp4" class="w-full h-full object-cover" loop muted playsinline onclick="toggleVideoPlay(this)"></video>
+                                    <div class="absolute bottom-3 right-3 bg-black/60 p-1.5 rounded-full text-white text-xs pointer-events-none">
+                                        <i class="fa-solid fa-video"></i>
+                                    </div>
+                                </div>
+                                <!-- Foto 5 -->
+                                <div class="carousel-slide w-full h-full relative" ondblclick="triggerLikeHeart()">
+                                    <img src="fs.jpeg" class="w-full h-full object-cover">
+                                </div>
+                                <!-- Foto 6 -->
+                                <div class="carousel-slide w-full h-full relative" ondblclick="triggerLikeHeart()">
+                                    <img src="sd.jpeg" class="w-full h-full object-cover">
+                                </div>
+                                <!-- Foto 7 -->
+                                <div class="carousel-slide w-full h-full relative" ondblclick="triggerLikeHeart()">
+                                    <img src="sor.jpeg" class="w-full h-full object-cover">
+                                </div>
+                                <!-- Foto 8 -->
+                                <div class="carousel-slide w-full h-full relative" ondblclick="triggerLikeHeart()">
+                                    <img src="vaa.jpeg" class="w-full h-full object-cover">
+                                </div>
+                                <!-- Foto 9 -->
+                                <div class="carousel-slide w-full h-full relative" ondblclick="triggerLikeHeart()">
+                                    <img src="vales.jpeg" class="w-full h-full object-cover">
+                                </div>
+                                <!-- Foto 10 -->
+                                <div class="carousel-slide w-full h-full relative" ondblclick="triggerLikeHeart()">
+                                    <img src="vale.jpeg" class="w-full h-full object-cover">
+                                </div>
+
+                            </div>
+
+                            <!-- Flechas de navegación para PC / Escritorio -->
+                            <button onclick="scrollCarousel(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-8 h-8 rounded-full flex items-center justify-center text-xs backdrop-blur-sm transition z-10 shadow-lg">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button onclick="scrollCarousel(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-8 h-8 rounded-full flex items-center justify-center text-xs backdrop-blur-sm transition z-10 shadow-lg">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+
+                            <!-- Corazón Animado al hacer Doble Clic/Tap -->
+                            <div id="heartOverlay" class="absolute top-1/2 left-1/2 text-rose-500 text-6xl sm:text-7xl opacity-0 pointer-events-none drop-shadow-lg z-20">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+
+                        </div>
+
+                        <!-- Indicadores de Puntos (Dots) estilo Instagram -->
+                        <div class="flex justify-center items-center gap-1.5 py-2 bg-slate-900 border-b border-slate-800 overflow-x-auto no-scrollbar px-4" id="dotsContainer">
+                            <!-- Los dots se autogeneran por JS -->
+                        </div>
+
+                        <!-- Acciones e Interacciones -->
+                        <div class="p-3 sm:p-4 space-y-2">
+                            <div class="flex justify-between items-center text-base sm:text-lg text-slate-200">
+                                <div class="flex gap-3 sm:gap-4">
+                                    <button id="likeBtn" onclick="toggleLike()" class="hover:text-rose-500 transition">
+                                        <i id="likeIcon" class="fa-regular fa-heart"></i>
+                                    </button>
+                                    <button class="hover:text-sky-400 transition"><i class="fa-regular fa-comment"></i></button>
+                                    <button class="hover:text-emerald-400 transition"><i class="fa-regular fa-paper-plane"></i></button>
+                                </div>
+                                <button class="hover:text-amber-400 transition"><i class="fa-regular fa-bookmark"></i></button>
+                            </div>
+
+                            <!-- Likes count -->
+                            <div class="text-xs font-bold text-slate-200">
+                                Le gusta a <span class="text-pink-300">rodolfo</span> y a <span id="likeCount">1,240</span> personas más
+                            </div>
+
+                            <!-- Pie de foto -->
+                            <div class="text-xs text-slate-300 leading-relaxed">
+                                <span class="font-bold text-slate-100 mr-1.5">vale_bday</span>
+                                Un carrusel lleno de los mejores recuerdos, momentos inolvidables y risas compartidas. ¡Que este nuevo año venga cargado de muchas más aventuras! 📸✨🎉
+                            </div>
+
+                            <div class="text-[10px] text-slate-500 uppercase tracking-wider pt-1">
+                                HACE UNOS MOMENTOS
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Interactive Controls Bottom Bar -->
+                <div class="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                    <!-- Confetti Button -->
+                    <button onclick="triggerConfettiBurst()" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-pink-500/30 transform active:scale-95 transition flex items-center gap-2">
+                        <span>🎉 ¡Lluvia de Confeti!</span>
+                    </button>
+
+                    <!-- Play Music / Synth Melody Toggle -->
+                    <button id="bgmBtn" onclick="toggleBackgroundMusic()" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 font-bold text-xs sm:text-sm shadow-lg transform active:scale-95 transition flex items-center gap-2">
+                        <i class="fa-solid fa-music"></i>
+                        <span id="bgmBtnText">Música de Celebración</span>
+                    </button>
+
+                    <!-- Replay Jumpscare Joke -->
+                    <button onclick="replayJumpscare()" class="px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-slate-900/80 hover:bg-red-950 text-red-400 border border-red-500/30 text-xs font-semibold transform active:scale-95 transition flex items-center gap-2">
+                        <i class="fa-solid fa-ghost"></i>
+                        <span>Volver a Asustar 😈</span>
+                    </button>
+
+                    <!-- Botón para ir a tu otra página -->
+                    <a href="carta_sorpresa_cumpleanos.html" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/30 transform active:scale-95 transition flex items-center gap-2">
+                        <span>✨ Carta prototipo_v1 🚀</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* ===================================================
+           AUDIO SYNTHESIZER (Web Audio API - Volumen Reducido)
+           =================================================== */
+        let audioCtx = null;
+        let isBgmPlaying = false;
+        let bgmInterval = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Synthesize FNAF Screech Sound Effect (Volumen bajito y suave)
+        function playFnafScream() {
+            initAudio();
+            const duration = 1.4;
+            
+            const osc1 = audioCtx.createOscillator();
+            osc1.type = 'sawtooth';
+            osc1.frequency.setValueAtTime(600, audioCtx.currentTime);
+            osc1.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + duration);
+
+            const osc2 = audioCtx.createOscillator();
+            osc2.type = 'square';
+            osc2.frequency.setValueAtTime(250, audioCtx.currentTime);
+            osc2.frequency.linearRampToValueAtTime(70, audioCtx.currentTime + duration);
+
+            const bufferSize = audioCtx.sampleRate * duration;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+
+            // Volumen reducido drásticamente aquí (de 0.8 a 0.15)
+            const gainNode = audioCtx.createGain();
+            gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+            osc1.connect(gainNode);
+            osc2.connect(gainNode);
+            noise.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            osc1.start();
+            osc2.start();
+            noise.start();
+
+            osc1.stop(audioCtx.currentTime + duration);
+            osc2.stop(audioCtx.currentTime + duration);
+            noise.stop(audioCtx.currentTime + duration);
+        }
+
+        // Synthesize Happy Cheerful Chime Music (Volumen suave)
+        function playChimeNote(freq, time, duration = 0.3) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+
+            // Volumen reducido (de 0.15 a 0.04)
+            gain.gain.setValueAtTime(0.04, time);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + duration);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(time);
+            osc.stop(time + duration);
+        }
+
+        function toggleBackgroundMusic() {
+            initAudio();
+            const btnText = document.getElementById('bgmBtnText');
+
+            if (isBgmPlaying) {
+                clearInterval(bgmInterval);
+                isBgmPlaying = false;
+                btnText.innerText = "Música de Celebración";
+            } else {
+                isBgmPlaying = true;
+                btnText.innerText = "Pausar Música 🎵";
+                
+                const notes = [
+                    261.63, 261.63, 293.66, 261.63, 349.23, 329.63,
+                    261.63, 261.63, 293.66, 261.63, 392.00, 349.23,
+                    261.63, 261.63, 523.25, 440.00, 349.23, 329.63, 293.66,
+                    466.16, 466.16, 440.00, 349.23, 392.00, 349.23
+                ];
+                let step = 0;
+
+                bgmInterval = setInterval(() => {
+                    if (!isBgmPlaying) return;
+                    const now = audioCtx.currentTime;
+                    playChimeNote(notes[step], now, 0.4);
+                    step = (step + 1) % notes.length;
+                }, 400);
+            }
+        }
+
+
+        /* ===================================================
+           MAIN EXPERIENCE FLOW & TIMERS
+           =================================================== */
+
+        function openEnvelope() {
+            initAudio();
+            const envelope = document.getElementById('envelope');
+            envelope.classList.add('open');
+
+            setTimeout(() => {
+                const stepEnvelope = document.getElementById('stepEnvelope');
+                const stepReading = document.getElementById('stepReading');
+
+                stepEnvelope.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    stepEnvelope.classList.add('hidden');
+                    stepReading.classList.remove('hidden');
+                    
+                    setTimeout(() => {
+                        stepReading.classList.remove('opacity-0', 'scale-95');
+                        stepReading.classList.add('opacity-100', 'scale-100');
+                        startCountdownToJumpscare();
+                    }, 50);
+                }, 500);
+            }, 800);
+        }
+
+        function startCountdownToJumpscare() {
+            const timerBar = document.getElementById('timerBar');
+            timerBar.style.width = '0%';
+
+            // Temporizador ajustado exactamente a 10 Segundos (10000ms)
+            setTimeout(() => {
+                triggerJumpscare();
+            }, 10000);
+        }
+
+        function triggerJumpscare() {
+            const jumpscareOverlay = document.getElementById('jumpscareOverlay');
+            const flashBg = document.getElementById('flashBg');
+
+            jumpscareOverlay.classList.remove('hidden');
+            jumpscareOverlay.classList.add('flex', 'jumpscare-active');
+
+            playFnafScream();
+
+            let flashes = 0;
+            const flashInterval = setInterval(() => {
+                flashBg.style.opacity = flashes % 2 === 0 ? '0.6' : '0';
+                flashes++;
+                if (flashes > 10) clearInterval(flashInterval);
+            }, 80);
+
+            setTimeout(() => {
+                jumpscareOverlay.classList.add('hidden');
+                jumpscareOverlay.classList.remove('flex', 'jumpscare-active');
+                
+                showGrandBirthdayCard();
+            }, 1600);
+        }
+
+        function showGrandBirthdayCard() {
+            const stepReading = document.getElementById('stepReading');
+            const stepApologyAndCard = document.getElementById('stepApologyAndCard');
+
+            stepReading.classList.add('hidden');
+            stepApologyAndCard.classList.remove('hidden');
+
+            setTimeout(() => {
+                stepApologyAndCard.classList.remove('translate-y-10', 'opacity-0');
+                stepApologyAndCard.classList.add('translate-y-0', 'opacity-100');
+                
+                triggerConfettiBurst();
+                toggleBackgroundMusic();
+                renderDots();
+            }, 100);
+        }
+
+        function replayJumpscare() {
+            triggerJumpscare();
+        }
+
+        function toggleCandle() {
+            const flame = document.getElementById('candleFlame');
+            if (flame.style.display === 'none') {
+                flame.style.display = 'block';
+            } else {
+                flame.style.display = 'none';
+                triggerConfettiBurst();
+            }
+        }
+
+        /* ===================================================
+           INSTAGRAM CAROUSEL & PHOTO FEED LOGIC
+           =================================================== */
+        let isLiked = false;
+
+        function scrollCarousel(direction) {
+            const track = document.getElementById('carouselTrack');
+            const slideWidth = track.clientWidth;
+            track.scrollBy({ left: direction * slideWidth, behavior: 'smooth' });
+        }
+
+        function updateCarouselIndicators() {
+            const track = document.getElementById('carouselTrack');
+            const slides = track.querySelectorAll('.carousel-slide');
+            const slideWidth = track.clientWidth;
+            const currentIndex = Math.round(track.scrollLeft / slideWidth);
+
+            document.getElementById('slideIndicatorText').innerText = `${currentIndex + 1}/${slides.length}`;
+
+            const dots = document.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, idx) => {
+                if (idx === currentIndex) {
+                    dot.classList.add('bg-pink-500', 'w-2.5');
+                    dot.classList.remove('bg-slate-600', 'w-1.5');
+                } else {
+                    dot.classList.remove('bg-pink-500', 'w-2.5');
+                    dot.classList.add('bg-slate-600', 'w-1.5');
+                }
+            });
+        }
+
+        function renderDots() {
+            const track = document.getElementById('carouselTrack');
+            const slides = track.querySelectorAll('.carousel-slide');
+            const dotsContainer = document.getElementById('dotsContainer');
+            dotsContainer.innerHTML = '';
+
+            slides.forEach((_, idx) => {
+                const dot = document.createElement('div');
+                dot.className = `carousel-dot h-1.5 rounded-full transition-all duration-300 ${idx === 0 ? 'bg-pink-500 w-2.5' : 'bg-slate-600 w-1.5'}`;
+                dotsContainer.appendChild(dot);
+            });
+            updateCarouselIndicators();
+        }
+
+        function toggleLike() {
+            const likeIcon = document.getElementById('likeIcon');
+            const likeCount = document.getElementById('likeCount');
+
+            if (!isLiked) {
+                likeIcon.classList.remove('fa-regular', 'fa-heart');
+                likeIcon.classList.add('fa-solid', 'fa-heart', 'text-rose-500');
+                likeCount.innerText = '1,241';
+                isLiked = true;
+            } else {
+                likeIcon.classList.remove('fa-solid', 'fa-heart', 'text-rose-500');
+                likeIcon.classList.add('fa-regular', 'fa-heart');
+                likeCount.innerText = '1,240';
+                isLiked = false;
+            }
+        }
+
+        function triggerLikeHeart() {
+            const heartOverlay = document.getElementById('heartOverlay');
+            heartOverlay.classList.remove('heart-pop-anim');
+            void heartOverlay.offsetWidth;
+            heartOverlay.classList.add('heart-pop-anim');
+            
+            if (!isLiked) {
+                toggleLike();
+            }
+        }
+
+        function toggleVideoPlay(videoElem) {
+            if (videoElem.paused) {
+                videoElem.play();
+                videoElem.muted = false;
+            } else {
+                videoElem.pause();
+            }
+        }
+
+        function uploadCustomMedia(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            const track = document.getElementById('carouselTrack');
+            track.innerHTML = '';
+
+            Array.from(files).forEach(file => {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide w-full h-full relative flex items-center justify-center bg-black';
+                
+                const fileURL = URL.createObjectURL(file);
+
+                if (file.type.startsWith('video/')) {
+                    const video = document.createElement('video');
+                    video.src = fileURL;
+                    video.className = 'w-full h-full object-cover';
+                    video.loop = true;
+                    video.playsInline = true;
+                    video.onclick = function() { toggleVideoPlay(this); };
+                    
+                    const badge = document.createElement('div');
+                    badge.className = 'absolute bottom-3 right-3 bg-black/60 p-1.5 rounded-full text-white text-xs pointer-events-none';
+                    badge.innerHTML = '<i class="fa-solid fa-video"></i>';
+
+                    slide.appendChild(video);
+                    slide.appendChild(badge);
+                } else {
+                    const img = document.createElement('img');
+                    img.src = fileURL;
+                    img.className = 'w-full h-full object-cover';
+                    slide.ondblclick = triggerLikeHeart;
+                    slide.appendChild(img);
+                }
+
+                track.appendChild(slide);
+            });
+
+            renderDots();
+        }
+
+        /* ===================================================
+           CANVAS CONFETTI & STAR PARTICLES SYSTEM
+           =================================================== */
+
+        const particleCanvas = document.getElementById('particleCanvas');
+        const pCtx = particleCanvas.getContext('2d');
+        const confettiCanvas = document.getElementById('confettiCanvas');
+        const cCtx = confettiCanvas.getContext('2d');
+
+        let particles = [];
+        let confetti = [];
+
+        function resizeCanvases() {
+            particleCanvas.width = window.innerWidth;
+            particleCanvas.height = window.innerHeight;
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvases);
+
+        function initParticles() {
+            resizeCanvases();
+            particles = [];
+            for (let i = 0; i < 60; i++) {
+                particles.push({
+                    x: Math.random() * particleCanvas.width,
+                    y: Math.random() * particleCanvas.height,
+                    radius: Math.random() * 2 + 1,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.5 + 0.2
+                });
+            }
+        }
+
+        function animateParticles() {
+            pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+            pCtx.fillStyle = 'white';
+
+            particles.forEach(p => {
+                pCtx.globalAlpha = p.alpha;
+                pCtx.beginPath();
+                pCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                pCtx.fill();
+
+                p.y -= p.speed;
+                if (p.y < 0) {
+                    p.y = particleCanvas.height;
+                    p.x = Math.random() * particleCanvas.width;
+                }
+            });
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        function triggerConfettiBurst() {
+            const colors = ['#f472b6', '#38bdf8', '#fbbf24', '#a855f7', '#22c55e', '#ef4444'];
+            for (let i = 0; i < 120; i++) {
+                confetti.push({
+                    x: confettiCanvas.width / 2,
+                    y: confettiCanvas.height / 2,
+                    vx: (Math.random() - 0.5) * 16,
+                    vy: (Math.random() - 0.8) * 16,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    rotation: Math.random() * 360,
+                    rSpeed: (Math.random() - 0.5) * 10,
+                    opacity: 1
+                });
+            }
+        }
+
+        function animateConfetti() {
+            cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+            confetti.forEach((c, index) => {
+                c.x += c.vx;
+                c.y += c.vy;
+                c.vy += 0.25;
+                c.rotation += c.rSpeed;
+                c.opacity -= 0.008;
+
+                cCtx.save();
+                cCtx.globalAlpha = Math.max(0, c.opacity);
+                cCtx.translate(c.x, c.y);
+                cCtx.rotate((c.rotation * Math.PI) / 180);
+                cCtx.fillStyle = c.color;
+                cCtx.fillRect(-c.size / 2, -c.size / 2, c.size, c.size);
+                cCtx.restore();
+
+                if (c.opacity <= 0 || c.y > confettiCanvas.height) {
+                    confetti.splice(index, 1);
+                }
+            });
+
+            requestAnimationFrame(animateConfetti);
+        }
+
+        initParticles();
+        animateParticles();
+        animateConfetti();
+    </script>
+</body>
+</html>
